@@ -1,7 +1,7 @@
 import * as Location from "expo-location";
 
 import {Alert, Button, Image, StyleSheet, Text, View} from "react-native";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import {COLORS} from "../constants";
 import MapPreview from "./MapPreview";
@@ -10,7 +10,7 @@ const LocationPicker = props => {
     const [pickedLocation, setPickedLocation] = useState();
 
   const verifyPermissions = async () => {
-    const { status } = await location.requestForegroundPermissionsAsync();
+    const { status } = await Location.requestForegroundPermissionsAsync();
 
     if (status !== 'granted') {
       Alert.alert(
@@ -33,7 +33,7 @@ const handleGetLocation = async () => {
         timeout: 5000
     })
 
-    console.log(location);
+   // console.log(location);
 
     setPickedLocation({
         lat: location.coords.latitude,
@@ -42,17 +42,17 @@ const handleGetLocation = async () => {
 }
 
 return (
-<View style={styles.locationPicker}>
-<View style={styles.mapPreview} >
-{!pickedLocation
-? <Text>Location en proceso</Text>
-: <Text>Latitud: {pickedLocation.lat} - Longitud: {pickedLocation.lng}</Text>}
-</View>
-<Button title="Obtener Location" color={COLORS.PEACH_PUFF}
-onPress={handleGetLocation} />
-</View>
-)
-}
+    <View style={styles.locationPicker}>
+    <View style={styles.mapPreview} >
+    {!pickedLocation
+    ? <Text>Location en proceso</Text>
+    : <MapPreview style={styles.mapPreview} location={pickedLocation} /> }
+    </View>
+    <Button title="Obtener Location" color={COLORS.PEACH_PUFF}
+    onPress={handleGetLocation} />
+    </View>
+    )
+    }
 
 
 
