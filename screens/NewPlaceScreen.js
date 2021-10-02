@@ -1,9 +1,11 @@
+import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { View, Text, Button, TextInput, ScrollView, StyleSheet } from 'react-native'
+
 import { COLORS } from '../constants'
-import { addPlace } from '../store/places.actions';
 import ImageSelector from '../components/ImageSelector';
+import LocationPicker from '../components/LocationPicker';
+import { addPlace } from '../store/places.actions';
+import { useDispatch } from 'react-redux';
 
 const NewPlaceScreen = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -32,7 +34,7 @@ const NewPlaceScreen = ({ navigation }) => {
                 />
 
                 <ImageSelector onImage={handlePickImage} />
-
+                <LocationPicker />
                 <Button
                     title="Grabar Dirección"
                     color={COLORS.MAROON}
