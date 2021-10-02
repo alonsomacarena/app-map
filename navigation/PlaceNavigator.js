@@ -1,14 +1,17 @@
+import { COLORS } from '../constants'
+import MapScreen from '../screens/MapScreen'
+import NewPlaceScreen from '../screens/NewPlaceScreen'
+import PlaceDetailScreen from '../screens/PlaceDetailScreen'
+import PlaceListScreen from '../screens/PlaceListScreen'
+import { Platform } from 'react-native'
 import React from 'react'
-import { Platform } from 'react-native' 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { COLORS } from '../constants' 
-
 // screens
-import PlaceListScreen from '../screens/PlaceListScreen'
-import PlaceDetailScreen from '../screens/PlaceDetailScreen'
-import NewPlaceScreen from '../screens/NewPlaceScreen'
-import MapScreen from '../screens/MapScreen'
+
+
+
+
 
 const PlaceStack = createNativeStackNavigator()
 
