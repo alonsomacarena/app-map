@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { View, Button, Image, Text, StyleSheet, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+
+import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
 
 import { COLORS } from '../constants';
 
