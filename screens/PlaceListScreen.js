@@ -1,50 +1,56 @@
+import { FlatList, StyleSheet } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import React, { useEffect, useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { FlatList } from 'react-native'
 import HeaderButton from '../components/HeaderButton';
 import PlaceItem from '../components/PlaceItem';
 import { loadPlaces } from '../store/places.actions';
 
-const PlaceListScreen = ({ navigation }) => {
-    const dispatch = useDispatch();
-    const places = useSelector(state => state.places.places);
-    
+const PlaceListScreen = ({navigation}) => {
+    const dispatch = useDispatch()
+    const places = useSelector(state => state.places.places)
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-               <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                   <Item
-                        title="Nueva"
-                        iconName="md-add"
-                        onPress={() => navigation.navigate('Nuevo')}
-                   />
-               </HeaderButtons> 
+                <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                    <Item 
+                        title="Nueva" 
+                        iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
+                        onPress={() => navigation.push('Nuevo')}/>
+                </HeaderButtons>
             )
         })
-    }, [navigation]);
+    }, [navigation])
 
     useEffect(() => {
         dispatch(loadPlaces());
     }, []);
 
-    const renderItem = (data) => (
-        <PlaceItem
-            title={data.item.title}
-            image={data.item.image}
-            address="123 Street, City, Country"
-            onSelect={() => navigation.navigate('Detalle')}
-        />
-    )
-
     return (
-        <FlatList
+       <FlatList 
             data={places}
-            keyExtractor={item => item.id}
-            renderItem={renderItem}
-        />
+            keyExtract={item => item.id}
+            renderItem={itemData => (
+                <PlaceItem 
+                    image={itemData.item.image}
+                    title={itemData.item.title}
+                    address={itemData.item.address}
+                    onSelect={() =>{ navigation.navigate('Detalle', { 
+                        placeTitle: itemData.item.title,
+                        placeID: itemData.item.id
+                    })}}
+                />
+            )}
+       />
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+})
 
 export default PlaceListScreen

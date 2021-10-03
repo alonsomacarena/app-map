@@ -41,6 +41,8 @@ const handleGetLocation = async () => {
     });
 }
 
+const handlerPickOnMap = () => props.navigation.push("Map")
+
 return (
     <View style={styles.locationPicker}>
     <View style={styles.mapPreview} >
@@ -50,6 +52,8 @@ return (
     </View>
     <Button title="Obtener Location" color={COLORS.PEACH_PUFF}
     onPress={handleGetLocation} />
+    <Button title="Elige en el Mapa" color={COLORS.PEACH_PUFF}
+    onPress={handlerPickOnMap} />
     </View>
     )
     }

@@ -1,8 +1,10 @@
-import { createStore, combineReducers, applyMiddleware} from 'redux'
+import { applyMiddleware, combineReducers, createStore } from 'redux'
+
+import PlacesReducer from './places.reducer'
 import thunk from 'redux-thunk'
 
 // reducers
-import PlacesReducer from './places.reducer'
+
 
 const RootReducer = combineReducers({
     places: PlacesReducer

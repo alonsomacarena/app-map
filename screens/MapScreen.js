@@ -1,16 +1,63 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import {HeaderButtons, Item} from "react-navigation-header-buttons"
+import MapView, {Marker} from 'react-native-maps'
+import React, {useCallback, useLayoutEffect, useState} from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
-const MapScreen = () => {
-    return (
-        <View style={styles.container}>
-            <Text>Map View</Text>
-        </View>
-    )
+import HeaderButton from "../components/HeaderButton";
+
+const MapScreen = props => {
+    const [selectedLocation, setSelectedLocation] = useState();
+   const region = {
+       latitude: 37.78,
+       longitude: -122.43,
+       latitudeDelta: 0.0922,
+       longitudeDelta: 0.0421
+   }
+   const {navigation} = props
+
+   useLayoutEffect(() => {
+       navigation.setOptions({
+           headerRight: () => (
+               <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                   <Item title="Grabar" iconName="save-outline" onPress={() => savePickedLocationHandler()} />
+               </HeaderButtons>
+           )
+       })
+   }, [navigation])
+
+   const selectedLocationHandler = event => {
+       setSelectedLocation({
+           lat: event.nativeEvent.coordinate.latitude,
+           lng: event.nativeEvent.coordinate.longitude
+       });
+   };
+
+   const savePickedLocationHandler = useCallback(() => {
+       if(!selectedLocation){
+           return;
+       }
+       navigation.navigate("Nuevo", {picked: selectedLocation});
+   }, [selectedLocation]);
+
+   let markerCoordinates;
+
+   if(selectedLocation){
+       markerCoordinates = {
+           latitude: selectedLocation.lat,
+           longitude: selectedLocation.lng
+       };
+   }
+
+   return(
+       <MapView region={region} style={styles.map} onPress={selectedLocationHandler} >
+   {markerCoordinates && (
+       <Marker title="Ubicacion Seleccionada" coordinate={markerCoordinates} />
+   )}
+    </MapView>   )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    map: {
         flex: 1
     }
 })
