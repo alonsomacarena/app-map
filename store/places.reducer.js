@@ -1,4 +1,4 @@
-import { ADD_PLACE, LOAD_PLACES } from './places.actions';
+/*import { ADD_PLACE, LOAD_PLACES } from './places.actions';
 
 import Place from '../models/Place';
 
@@ -35,5 +35,48 @@ export default (state = initialState, action) => {
             }
         default:
             return state;
+    }
+}*/
+
+import { ADD_PLACE, LOAD_PLACES } from './places.actions'
+
+import Place from '../models/Place'
+
+// models
+
+
+const initialState = {
+    places: []
+}
+
+export default (state = initialState, action) => {
+    switch(action.type) {
+        case ADD_PLACE:
+            const newPlace = new Place(
+                action.payload.id, 
+                action.payload.title, 
+                action.payload.image,
+                action.payload.address,
+                action.payload.coords.lat,
+                action.payload.coords.lng
+                )
+            return  { 
+                ...state,
+                places: state.places.concat(newPlace)
+            }
+        case LOAD_PLACES:
+            return {
+                ...state,
+                places: action.places.map(item => new Place(
+                    item.id,
+                    item.title,
+                    item.image,
+                    item.address,
+                    item.lat,
+                    item.lng
+                ))
+            }
+        default:
+            return state
     }
 }

@@ -4,12 +4,16 @@ import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 
 import { COLORS } from '../constants';
+//import * as Permissions from 'expo-permissions';
+
+
 
 const ImageSelector = props => {
   const [pickedUri, setPickedUri] = useState();
 
   const verifyPermissions = async () => {
-    const { status } = await ImagePicker.requestCameraPermissionsAsync()
+   const { status } = await ImagePicker.requestCameraPermissionsAsync()
+//const {status} = await Permissions.askAsync(Permissions.CAMERA)
 
     if (status !== 'granted') {
       Alert.alert(
